@@ -33,7 +33,7 @@ Explicação detalhada sobre classes e métodos se encontram nos scripts atores.
 ## Ordem de desenvolvimento
 
 A ordem preferida é começar pelos atores, seguindo a ordem dos testes presentes no script atores_testes.py.
-Depois passar para a fase_teste.py, onde é implementada uma fase.
+Depois passar para a fase_testes.py, onde é implementada uma fase.
 
 É possível emular um jogo que termina em vitória rodando:
 
@@ -88,7 +88,7 @@ em pontos vizinhos. Ao colidir, os atores envolvidos devem ter seus status alter
 
 ## Classe Obstaculo
 
-Classe que representa obstáculos na fase e que podem ser destruídos por pássaros. Herda de ator. Seu caracter de 
+Classe que representa obstáculos na fase que podem ser destruídos por pássaros. Herda de ator. Seu caracter de
 representação é a letra "O", quando ATIVO.
 
 ### Status

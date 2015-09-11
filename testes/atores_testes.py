@@ -113,7 +113,7 @@ class AtorTestes(TestCase):
     def assert_colisao_atores_ativos(self, ator, ator2, intervalo=1):
         """
         Se certifica que há colisão entre atores ativos
-        Atenção: Esse não é método de teste porque nao se inicia com prefixo "text".
+        Atenção: Esse não é método de teste porque nao se inicia com prefixo "test".
         Ele serve apenas para encapsular toda lógica de teste de colisão entre dois atores ativos
         """
         # Conferindo status dos dois atores antes da colisão
@@ -127,7 +127,7 @@ class AtorTestes(TestCase):
     def assert_nao_colisao(self, ator, ator2):
         """
         Se certifica que não colisão entre dois atores
-        Atenção: Esse não é método de teste porque nao se inicia com prefixo "text".
+        Atenção: Esse não é método de teste porque nao se inicia com prefixo "test".
         Ele apenas encapsula a lógica de não colisão entre dois atores.
         So seja, eles deve manter seus respectivos status mesmo depois da chamada do metodo colidir
         """
@@ -257,9 +257,9 @@ class PassaroAmareloTests(PassaroBaseTests):
     def teste_velocidade_escalar(self):
         self.assertEqual(30, PassaroAmarelo.velocidade_escalar)
 
-    def teste_lacamento_vertical(self):
+    def teste_lancamento_vertical(self):
         """
-        Tests de lançamento vertical. Nele, o passaro só se move verticalmente e sua posição y se matém contanstante
+        Tests de lançamento vertical. Nele, o passaro só se move verticalmente e sua posição y se mantém constante
         :return:
         """
         passaro_amarelo = PassaroAmarelo(1, 1)

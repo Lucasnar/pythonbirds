@@ -37,7 +37,7 @@ class Ator():
         :param tempo: o tempo do jogo
         :return: posição x, y do ator
         """
-        return 1, 1
+        return (self.x, self.y)
 
     def colidir(self, outro_ator, intervalo=1):
         """
@@ -51,16 +51,24 @@ class Ator():
         :param intervalo: Intervalo a ser considerado
         :return:
         """
-        pass
+        if not (self.status == ATIVO and outro_ator.status == ATIVO):
+            pass
+        else:
+            if outro_ator.x - intervalo <= self.x <= outro_ator.x + intervalo:
+                if outro_ator.y - intervalo <= self.y <= outro_ator.y + intervalo:
+                    self.status = DESTRUIDO
+                    outro_ator.status = DESTRUIDO
+
 
 
 
 class Obstaculo(Ator):
-    pass
+    _caracter_ativo = 'O'
 
 
 class Porco(Ator):
-    pass
+    _caracter_ativo = '@'
+    _caracter_destruido = '+'
 
 
 class Passaro(Ator):
@@ -88,15 +96,16 @@ class Passaro(Ator):
 
         :return: booleano
         """
-        return True
+        return self._tempo_de_lancamento is not None
 
     def colidir_com_chao(self):
         """
         Método que executa lógica de colisão com o chão. Toda vez que y for menor ou igual a 0,
-        o status dos Passaro deve ser alterado para destruido, bem como o seu caracter
+        o status dos Passaros deve ser alterado para destruido, bem como o seu caracter
 
         """
-        pass
+        if self.y <= 0:
+            self.status = DESTRUIDO
 
     def calcular_posicao(self, tempo):
         """
@@ -112,24 +121,40 @@ class Passaro(Ator):
         :param tempo: tempo de jogo a ser calculada a posição
         :return: posição x, y
         """
-        return 1, 1
+        delta_t = tempo - self._tempo_de_lancamento
+
+        if self._tempo_de_lancamento == None:
+            return (self._x_inicial, self._y_inicial)
+
+        elif self.status == ATIVO:
+            # X=X0+v*cos(teta)*delta_t
+            # Y=Y0+v*sen(teta)delta_t-(G*delta_t^2)/2
+            self.x = self._x_inicial + self.velocidade_escalar * (math.cos(self._angulo_de_lancamento) * delta_t)
+            self.y = self._y_inicial + self.velocidade_escalar * (math.sin(self._angulo_de_lancamento) * delta_t) - (GRAVIDADE*delta_t**2)/2
+            return (self.x, self.y)
+
 
 
     def lancar(self, angulo, tempo_de_lancamento):
         """
-        Lógica que lança o pássaro. Deve armazenar o ângulo e o tempo de lançamento para posteriores cálculo.
+        Lógica que lança o pássaro. Deve armazenar o ângulo e o tempo de lançamento para posteriores cálculos.
         O ângulo é passado em graus e deve ser transformado em radianos
 
         :param angulo:
         :param tempo_de_lancamento:
         :return:
         """
-        pass
+        self._angulo_de_lancamento = math.radians(angulo)
+        self._tempo_de_lancamento = tempo_de_lancamento
 
 
 class PassaroAmarelo(Passaro):
-    pass
+    _caracter_ativo = 'A'
+    _caracter_destruido = 'a'
+    velocidade_escalar = 30
 
 
 class PassaroVermelho(Passaro):
-    pass
+    _caracter_ativo = 'V'
+    _caracter_destruido = 'v'
+    velocidade_escalar = 20
