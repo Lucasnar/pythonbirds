@@ -60,8 +60,6 @@ class Ator():
                     outro_ator.status = DESTRUIDO
 
 
-
-
 class Obstaculo(Ator):
     _caracter_ativo = 'O'
 
@@ -121,19 +119,17 @@ class Passaro(Ator):
         :param tempo: tempo de jogo a ser calculada a posição
         :return: posição x, y
         """
+        if self._tempo_de_lancamento is None:
+            return self._x_inicial, self._y_inicial
+
         delta_t = tempo - self._tempo_de_lancamento
 
-        if self._tempo_de_lancamento == None:
-            return (self._x_inicial, self._y_inicial)
-
-        elif self.status == ATIVO:
+        if self.status == ATIVO:
             # X=X0+v*cos(teta)*delta_t
             # Y=Y0+v*sen(teta)delta_t-(G*delta_t^2)/2
             self.x = self._x_inicial + self.velocidade_escalar * (math.cos(self._angulo_de_lancamento) * delta_t)
-            self.y = self._y_inicial + self.velocidade_escalar * (math.sin(self._angulo_de_lancamento) * delta_t) - (GRAVIDADE*delta_t**2)/2
-            return (self.x, self.y)
-
-
+            self.y = self._y_inicial + self.velocidade_escalar * (math.sin(self._angulo_de_lancamento) * delta_t) - (GRAVIDADE * delta_t ** 2) / 2
+            return self.x, self.y
 
     def lancar(self, angulo, tempo_de_lancamento):
         """

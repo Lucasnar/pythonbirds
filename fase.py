@@ -2,7 +2,6 @@
 from itertools import chain
 from atores import ATIVO
 
-
 VITORIA = 'VITORIA'
 DERROTA = 'DERROTA'
 EM_ANDAMENTO = 'EM_ANDAMENTO'
@@ -115,10 +114,28 @@ class Fase():
         :param tempo: tempo para o qual devem ser calculados os pontos
         :return: objeto do tipo Ponto
         """
-        pontos=[]
+        pontos = []
+        for passaro in self._passaros:
+            passaro.calcular_posicao(tempo)
+            for porco in self._porcos:
+                if passaro.status == ATIVO:
+                    passaro.colidir(porco, self.intervalo_de_colisao)
+                    passaro.colidir_com_chao()
+                else:
+                    break
+            for obstaculo in self._obstaculos:
+                if passaro.status == ATIVO:
+                    passaro.colidir(obstaculo, self.intervalo_de_colisao)
+                    passaro.colidir_com_chao()
+                else:
+                    break
+            pontos.extend([self._transformar_em_ponto(passaro)])
 
+        for porco in self._porcos:
+            pontos.extend([self._transformar_em_ponto(porco)])
+        for obstaculo in self._obstaculos:
+            pontos.extend([self._transformar_em_ponto(obstaculo)])
         return pontos
 
     def _transformar_em_ponto(self, ator):
         return Ponto(ator.x, ator.y, ator.caracter())
-
